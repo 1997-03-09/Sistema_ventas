@@ -1,0 +1,82 @@
+﻿@model DataPaginador<InputModelRegistrar>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    //var list = Model.List;
+}
+@*@model IEnumerable<InputModelRegistrar>*@
+
+
+<div class="container2">
+    <h5>Usuarios</h5>
+    <div class="row">
+        <div class="input-field col s12">
+            <a asp-area="Usuarios" asp-page="/Registrar/Registrar" class="waves-effect waves-light btn ">Registrar</a>
+            <form asp-area="Usuario" asp-controller="Usuarios" asp-action="Index" method="get">
+                <div class="row">
+                    <div class="input-field col s6">
+                        <input asp-for="Search" placeholder="Buscar usuario">
+                    </div>
+                    <div class="input-field col s6">
+                        <button type="submit" class="waves-effect waves-light btn">Buscar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Imagen
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Input.Nombre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Input.Apellido)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Input.Role)
+                </th>
+                <th>
+                    Opciones
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.List)
+            {
+                var imagen = item.Email + ".png";
+                <tr>
+                    <td>
+                        <ul class='collection'>
+                            <li class='collection-item avatar'>
+                                <img class='responsive circle' src="~/images/fotos/Usuarios/@imagen" />
+                            </li>
+                        </ul>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Apellido)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Role)
+                    </td>
+                    <td>
+                        <a asp-area="Usuarios" asp-page="/Registrar/Registrar" asp-route-id="@item.Email" class="waves-effect waves-light btn">Edit</a> |
+                        <a asp-area="Usuarios" asp-page="/Eliminar/Eliminar" asp-route-id="@item.Email" class="waves-effect waves-light btn orange">Delete</a>
+                    </td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+    <div>
+        Resultados @Html.Raw(Model.Pagi_info);
+        <br />
+        @Html.Raw(Model.Pagi_navegacion)
+    </div>
+</div>

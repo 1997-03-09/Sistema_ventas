@@ -1,0 +1,90 @@
+﻿@page
+@model RegistrarModel
+@{
+}
+<div id="" class="container2">
+    <form method="post" enctype="multipart/form-data">
+        <div class="modal-content">
+            <center>
+                <h5>Registrar usuarios</h5>
+            </center>
+            <div class="row">
+                <div class="col s9 m4">
+                    <div class="card ">
+                        <div class="card-content white-text">
+                            <center>
+                                <span class="card-title blue-grey-text  ">Foto o imagen</span>
+                                <output id="imageRgistrar">
+                                    <img src="~/images/fotos/default.png" />
+                                </output>
+                            </center>
+                        </div>
+                        <div class="card-action">
+                            <a>
+                                <div class="file-field input-field">
+                                    <div class="btn waves-effect waves-light">
+                                        <span>Subir</span>
+                                        <input asp-for="Input.AvatarImage" accept="image/*" type="file" id="files" >
+                                        <div class="file-path-wrapper">
+                                            <input class="file-path " type="text">
+                                        </div>
+                                    </div>
+                                    <br />
+                                </div>
+                            </a>
+                            <center>
+                                <a>Imagen</a>
+                            </center>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input asp-for="Input.Nombre" placeholder="Nombre" id="nombre">
+                            <label asp-for="Input.Nombre"></label>
+                            <span asp-validation-for="Input.Nombre" class="text-danger"></span>
+                        </div>
+                        <div class="input-field col s6">
+                            <input asp-for="Input.Apellido" placeholder="Apellido" id="apellido">
+                            <label asp-for="Input.Apellido"></label>
+                            <span asp-validation-for="Input.Apellido" class="text-danger"></span>
+                        </div>
+                        <div class="input-field col s6">
+                            <input asp-for="Input.NID" placeholder="Nº Identidad" id="nid">
+                            <label asp-for="Input.NID"></label>
+                            <span asp-validation-for="Input.NID" class="text-danger"></span>
+                        </div>
+                        <div class="input-field col s6">
+                            <input asp-for="Input.Telefono" placeholder="Nº Telefono" id="telefono">
+                            <label asp-for="Input.Telefono"></label>
+                            <span asp-validation-for="Input.Telefono" class="text-danger"></span>
+                        </div>
+                        <div class="input-field col s6">
+                            <input asp-for="Input.Email" placeholder="Email" id="email">
+                            <label asp-for="Input.Email"></label>
+                            <span asp-validation-for="Input.Email" class="text-danger"></span>
+                        </div>
+                        <div id="divPassword" class="input-field col s6">
+                            <input asp-for="Input.Password" placeholder="Password" id="password" />
+                            <label asp-for="Input.Password"></label>
+                            <span asp-validation-for="Input.Password" class="text-danger "></span>
+                        </div>
+                        <div class="input-field col s6">
+                            @Html.DropDownList("Input.Role", new SelectList(Model.Input.rolesLista, "Text", "Text"), "Seleccione un role", null)
+                        </div>
+                        <div class="input-field col s6">
+                            <button type="submit" class="waves-effect waves-light btn">Registrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <label id="Message" class="red-text text-darken-4 ">@Html.DisplayFor(m => m.Input.ErrorMessage)  </label>
+        </div>
+    </form>
+</div>
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

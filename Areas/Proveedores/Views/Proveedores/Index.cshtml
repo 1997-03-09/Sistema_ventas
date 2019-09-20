@@ -1,0 +1,83 @@
+﻿@model DataPaginador<InputModelRegistrar>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container2">
+    <div class="row">
+        <h5>Proveedores</h5>
+        <div id="test1" class="col s12">
+            <div class="row">
+                <div class="input-field col s12">
+                    <form asp-area="Proveedores" asp-controller="Proveedores" asp-action="Index" method="get">
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <input asp-for="Search" placeholder="Buscar proveedores">
+                            </div>
+                            <div class="input-field col s6">
+                                <button type="submit" class="waves-effect waves-light btn-small">Buscar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <a asp-page="/Account/Registrar" class="waves-effect waves-light btn-small ">Registrar</a>
+                |
+                <a asp-area="Proveedores" asp-controller="Historiales" asp-action="HistoryTickets" class="waves-effect waves-light btn-small amber darken-3">Historial</a>
+                |
+                <a asp-area="Proveedores" asp-controller="Proveedores" asp-action="ExportProveedores" class="waves-effect waves-light btn-small grey darken-3">Export</a>
+            </div>
+            <ul class="collapsible">
+                <li>
+                    <div class="collapsible-header">
+                        <img class='responsive' src='~/images/iconos/Proveedores2.png' />Proveedores
+                    </div>
+                    <div class="collapsible-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Foto
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Input.Proveedor)
+                                    </th>
+                                    <th>
+                                        Opciones
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.List)
+                                {
+                                    var imagen = item.Email + ".png";
+                                    <tr>
+                                        <td>
+                                            <ul class='collection'>
+                                                <li class='collection-item avatar'>
+                                                    <img class='responsive circle' src="~/images/fotos/Proveedores/@imagen" />
+                                                </li>
+                                            </ul>
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Proveedor)
+                                        </td>
+                                        <td>
+                                            <a asp-area="Proveedores" asp-page="/Account/Reportes" asp-route-id="@item.Email" class="waves-effect waves-light btn-small cyan darken-3">Report</a> |
+                                            <a asp-area="Proveedores" asp-page="/Account/Registrar" asp-route-id="@item.Email" class="waves-effect waves-light btn-small grey darken-3">Edit</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <div>
+                            Resultados @Html.Raw(Model.Pagi_info)
+                            <br />
+                            @Html.Raw(Model.Pagi_navegacion)
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

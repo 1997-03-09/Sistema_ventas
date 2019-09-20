@@ -1,0 +1,154 @@
+﻿@page
+@model ComprasModel
+@{
+}
+<div class="container2">
+    <form method="post" enctype="multipart/form-data">
+        <div class="modal-content">
+            <center>
+                <h5>Compra de producto</h5>
+            </center>
+            <div class="row">
+                <div class="col s9 m4">
+                    <div class="card ">
+                        <div class="card-content white-text">
+                            <center>
+                                <span class="card-title blue-grey-text  ">Imagen</span>
+                                <output id="productoCompra">
+                                    <img class=" responsive-img" src="~/images/fotos/Compras/default.png" />
+                                </output>
+                            </center>
+                        </div>
+                        <div class="card-action">
+                            <a>
+                                <div class="file-field input-field">
+                                    <div class="btn waves-effect waves-light">
+                                        <span>Subir</span>
+                                        <input asp-for="Input.AvatarImage" accept="image/*" type="file" id="files">
+                                        <div class="file-path-wrapper">
+                                            <input class="file-path " type="text">
+                                        </div>
+                                    </div>
+                                    <br />
+                                </div>
+                            </a>
+                            <center>
+                                <a>Imagen</a>
+                            </center>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input asp-for="Input.Descripcion" placeholder="Descripcion">
+                            <label asp-for="Input.Descripcion"></label>
+                            <span asp-validation-for="Input.Descripcion" class="text-danger"></span>
+                        </div>
+                        <div class="input-field col s6">
+                            <input asp-for="Input.Cantidad" min="1" value="1" placeholder="Cantidad">
+                            <label asp-for="Input.Cantidad"></label>
+                            <span asp-validation-for="Input.Cantidad" class="text-danger"></span>
+                        </div>
+                        <div class="input-field col s6">
+                            <input asp-for="Input.Precio" placeholder="Precio">
+                            <label asp-for="Input.Precio"></label>
+                            <span asp-validation-for="Input.Precio" class="text-danger"></span>
+                        </div>
+                        <div class="input-field col s6">
+                            <input asp-for="Input.Proveedor" placeholder="Proveedor" disabled>
+                            <label asp-for="Input.Proveedor"></label>
+                            <span asp-validation-for="Input.Proveedor" class="text-danger"></span>
+                        </div>
+                        <div class="input-field col s3">
+                            <p>
+                                <label>
+                                    <input type="checkbox" asp-for="Input.Credito" />
+                                    <span>Credito</span>
+                                </label>
+                            </p>
+                        </div>
+                        <div class="input-field col s4">
+                            <button type="submit" class="waves-effect waves-light btn-small grey darken-3">Registrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <label id="Message" class="red-text text-darken-4 ">@Html.DisplayFor(m => m.Input.ErrorMessage)  </label>
+        </div>
+    </form>
+    <div class="row">
+        <div id="test1" class="col s12">
+            <div class="row">
+                <div class="input-field col s12">
+                    <form asp-area="Compras" asp-page="/Compras/Compras" method="get">
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <input asp-for="Search" placeholder="Buscar proveedores">
+                            </div>
+                            <div class="input-field col s6">
+                                <button type="submit" class="waves-effect waves-light btn-small grey darken-3">Buscar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <ul class="collapsible">
+                <li>
+                    <div class="collapsible-header">
+                        <img class='responsive' src='~/images/iconos/Proveedores2.png' />Proveedores
+                    </div>
+                    <div class="collapsible-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Foto
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Input.Proveedor)
+                                    </th>
+                                    <th>
+                                        Opciones
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Input.model.List)
+                                {
+                                    var imagen = item.Email + ".png";
+                                    <tr>
+                                        <td>
+                                            <ul class='collection'>
+                                                <li class='collection-item avatar'>
+                                                    <img class='responsive circle' src="~/images/fotos/Proveedores/@imagen" />
+                                                </li>
+                                            </ul>
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Proveedor)
+                                        </td>
+                                        <td>
+
+                                            <a href="/Compras/Compras/Compras?Search=@item.Email" class="waves-effect waves-light btn-small grey darken-3">Select</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <div>
+                            Resultados @Html.Raw(Model.Input.model.Pagi_info)
+                            <br />
+                            @Html.Raw(Model.Input.model.Pagi_navegacion)
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

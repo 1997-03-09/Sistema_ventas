@@ -1,0 +1,94 @@
+﻿@model DataPaginador<TTickets>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container2">
+    <h5>Histiriales de tickets</h5>
+    <div class="row">
+        <div class="input-field col s12">
+            <form asp-area="Clientes" asp-controller="Historiales" asp-action="Index" method="get">
+                <div class="row">
+                    <div class="input-field col s6">
+                        <input asp-for="Search" placeholder="Buscar cliente">
+                    </div>
+                    <div class="input-field col s6">
+                        <button type="submit" class="waves-effect waves-light btn-small">Buscar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <form asp-area="Clientes" asp-controller="Historiales" asp-action="Export" method="post" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-md-8" style="padding-top:10px;">
+                <button class="waves-effect waves-light btn-small amber darken-3">Export</button>
+            </div>
+        </div>
+    </form>
+    <ul class="collapsible">
+        <li>
+            <div class="collapsible-header">
+                <img class='responsive' src='~/images/iconos/Clientes2.png' />Ticket
+            </div>
+            <div class="collapsible-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Input.Deuda)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Input.FechaDeuda)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Input.Pago)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Input.FechaPago)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Input.Ticket)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Input.Email)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.List)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Deuda)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FechaDeuda)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Pago)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FechaPago)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Ticket)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Email)
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <div class="pagination">
+                    Resultados @Html.Raw(Model.Pagi_info);
+                    <br />
+                    @Html.Raw(Model.Pagi_navegacion)
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>

@@ -1,0 +1,153 @@
+﻿@model DataPaginador<TTempo_ventas>
+@{
+    ViewData["Title"] = "Ventas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var importe = 0m;
+    foreach (var item in Model.List)
+    {
+        importe += item.Importe;
+    }
+}
+
+    <div class="container2">
+        <div class="row">
+            <div class="row">
+                <form asp-area="Ventas" asp-controller="Ventas" asp-action="SetPagos" method="post">
+                    <div class="col s12 m4">
+                        <div class="card">
+                            <div class="card-content">
+                                <ul class="collection with-header">
+                                    <li class="collection-item">
+                                        <span>Opciones de ventas<span />
+                                    </li>
+                                    <li class="collection-item">
+                                        <table class="table">
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        Monto a pagar
+                                                        @string.Format("${0:#,###,###,##0.00####}", importe)
+                                                        <input type="hidden" id="vtImporte" name="dataCliente.Deuda" value="@importe.ToString()" />
+                                                    </td>
+                                                    <td>
+                                                        Su deuda
+                                                        <p id="vtDeuda"> </p>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </li>
+                                    <li class="collection-item">
+                                        <div class="row">
+                                            <div class="col s10">
+                                                <label>
+                                                    <input asp-for="dataCliente.Credito" onclick="" class="filled-in checkbox" />
+                                                    <span>Credito</span>
+                                                </label>
+                                            </div><br /><br />
+                                            <div class="input-field col s10">
+                                                <input asp-for="dataCliente.NID" id="textNid" disabled>
+                                                <label asp-for="dataCliente.NID"></label>
+                                                <span asp-validation-for="dataCliente.NID" class="text-danger"></span>
+                                            </div>
+                                            <div class="input-field col s10">
+                                                <table class="table">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                Su cambio
+                                                                <p id="vtCambio"></p>
+                                                                <input type="hidden" name="dataCliente.Cambio" id="textCambio">
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="input-field col s10">
+                                                <input asp-for="dataCliente.Pago" id="vtPagos" onkeypress="return new Ventas().pagos(event,this);">
+                                                <label asp-for="dataCliente.Pago"></label>
+                                                <span asp-validation-for="dataCliente.Pago" class="text-danger"></span>
+                                            </div>
+                                            <div class="input-field col s6">
+                                                <button type="submit" class="waves-effect waves-light btn-small">Cobrar</button>
+                                            </div>
+                                        </div>
+                                        <label>@Model.dataCliente.Message</label>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="col s12 m8">
+                    <div class="card">
+                        <div class="card-content">
+                            <ul class="collection with-header">
+                                <li class="collection-header">
+                                    <div class="row">
+                                        <div class="input-field col s12">
+                                            <form asp-area="Ventas" asp-controller="Ventas" asp-action="GetProducto" method="post">
+                                                <div class="row">
+                                                    <div class="input-field col s6">
+                                                        <input asp-for="Search" placeholder="Buscar producto">
+                                                    </div>
+                                                    <div class="input-field col s6">
+                                                        <button type="submit" class="waves-effect waves-light btn-small">Buscar</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="collection-item">
+                                    <img class='responsive' src='~/images/iconos/Shopping_cart2.png' />
+                                    <span> Importe @string.Format("${0:#,###,###,##0.00####}", importe) </span>
+                                </li>
+                                <li class="collection-item">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => model.Input.Descripcion)
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => model.Input.Cantidad)
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => model.Input.Precio)
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model.List)
+                                            {
+                                                var precio = string.Format("${0:#,###,###,##0.00####}", item.Precio);
+                                                <tr>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Descripcion)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Cantidad)
+                                                    </td>
+                                                    <td>
+                                                        @precio
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                    <div>
+                                        Resultados @Html.Raw(Model.Pagi_info)
+                                        <br />
+                                        @Html.Raw(Model.Pagi_navegacion)
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

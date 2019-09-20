@@ -1,0 +1,86 @@
+﻿@model DataPaginador<TCompras_temp>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container2">
+    <div class="row">
+        <h5>Registros de productos</h5>
+        <div id="test1" class="col s12">
+            <div class="row">
+                <div class="input-field col s12">
+                    <form asp-area="Productos" asp-controller="Productos" asp-action="Index" method="get">
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <input type="text" name="Search" placeholder="Buscar producto">
+                            </div>
+                            <div class="input-field col s6">
+                                <button type="submit" class="waves-effect waves-light btn-small">Buscar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <a asp-area="Productos" asp-controller="Productos" asp-action="ExportCompras" class="waves-effect waves-light btn-small grey darken-3">Export</a>
+                |
+                <a asp-area="Productos" asp-page="/Inventario/Inventario" class="waves-effect waves-light btn-small grey darken-3">Inventario</a>
+            </div>
+            <ul class="collapsible">
+                <li>
+                    <div class="collapsible-header">
+                        <img class='responsive' src='~/images/iconos/Shopping_cart2.png' />Compras
+                    </div>
+                    <div class="collapsible-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Imagen
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Input.Descripcion)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Input.Precio)
+                                    </th>
+                                    <th>
+                                        Opciones
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.List)
+                                {
+                                    var imagen = item.Codigo + ".png";
+                                    <tr>
+                                        <td>
+                                            <ul class='collection'>
+                                                <li class='collection-item avatar'>
+                                                    <img class='responsive circle' src="~/images/fotos/Compras/@imagen" />
+                                                </li>
+                                            </ul>
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Descripcion)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Precio)
+                                        </td>
+                                        <td>
+                                            <a asp-area="Productos" asp-page="/Registrar/Registrar" asp-route-id="@item.ID" class="waves-effect waves-light btn-small  orange darken-4">Registrar</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <div>
+                            Resultados @Html.Raw(Model.Pagi_info)
+                            <br />
+                            @Html.Raw(Model.Pagi_navegacion)
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

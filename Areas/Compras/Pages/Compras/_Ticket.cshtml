@@ -1,0 +1,58 @@
+﻿@model DetallesModel
+@{
+    var proveedor = Model.Input.Proveedor;
+}
+<div id="ticket">
+    <center>
+        <h5>Ticket de:PDHN</h5><br />
+    </center>
+    <ul class="collapsible">
+        <li>
+            <div class="collapsible-header">
+                <img class='responsive' src='~/images/iconos/Proveedores2.png' />Proveedor:@proveedor
+            </div>
+            <div class="collapsible-bod">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                Deuda
+                            </th>
+                            <th>
+                                Fecha 
+                            </th>
+                            <th>
+                                Pago
+                            </th>
+                            <th>
+                                Fecha
+                            </th>
+                            <th>
+                                Ticket
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                @Html.Raw(Model.Input.Deuda)
+                            </td>
+                            <td>
+                                @Html.Raw(Model.Input.FechaDeuda)
+                            </td>
+                            <td>
+                                @Html.Raw(Model.Input.Pago)
+                            </td>
+                            <td>
+                                @Html.Raw(Model.Input.FechaPago)
+                            </td>
+                            <td>
+                                @Html.Raw(Model.Input.Ticket)
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </li>
+    </ul>
+</div>

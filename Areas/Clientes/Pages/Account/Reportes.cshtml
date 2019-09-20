@@ -1,0 +1,105 @@
+﻿@page
+@model ReportesModel
+@{
+    var imagen = Model.Input.Email + ".png";
+    var nombre = Model.Input.Nombre + " " + Model.Input.Apellido;
+}
+<div class="container2">
+    <div class="modal-content">
+        <center>
+            <h5>Reportes cliente</h5>
+        </center>
+        <div class="row">
+            <div class="col s3 m3">
+                <div class="card ">
+                    <div class="card-content white-text">
+                        <center>
+                            <span class="card-title blue-grey-text  ">Foto</span>
+                            <output id="clienteReporte">
+                                <img class=" responsive-img" src="~/images/fotos/Clientes/@imagen" />
+                            </output>
+                        </center>
+                    </div>
+                </div>
+            </div>
+            <div class="col s6 m6">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Input.Nombre)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Input.Apellido)
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(model => model.Input.Nombre)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => model.Input.Apellido)
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col s6 m6">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="input-field col s12">
+                                    <form asp-area="Clientes" method="post">
+                                        <div class="row">
+                                            <div class="input-field col s6">
+                                                <input asp-for="Input1.Pago" placeholder="Monto a pagar"/>
+                                                <label asp-for="Input1.Pago"></label>
+                                                <span asp-validation-for="Input1.Pago" class="text-danger"></span>
+                                                <span id="Message" class="red-text text-darken-4 ">@Html.DisplayFor(m => m.Input1.ErrorMessage)  </span>
+                                            </div>
+                                            <div class="input-field col s6">
+                                                <button type="submit" class="waves-effect waves-light btn-small light-green darken-3">Cobrar</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <a class="waves-effect waves-light orange darken-2 btn-small" onclick="printThisDiv('ticket')">Ticket</a>
+            @if (0 < Model.Input.ClienteReport.Count)
+            {
+                foreach (var item in Model.Input.ClienteReport)
+                {
+                    <span>Deuda:<span class="green-text text-darken-3">@item.Deuda</span></span>
+                }
+                if (Model.Input.Credito.Equals("$0.00"))
+                {
+                    <span>Credito: <span class="deep-orange-text text-darken-4">No disponible</span></span>
+                }
+                else
+                {
+                    <span>Credito: <span class="green-text text-darken-3">Activo</span></span>
+                }
+            }
+            else
+            {
+                <a class="btn-flat disabled">Deuda:$00.0</a>
+            }
+            <partial name="_Ticket" />
+        </div>
+        <div class="modal-footer">
+            <label id="Message" class="red-text text-darken-4 ">@Html.DisplayFor(m => m.Input.ErrorMessage)  </label>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

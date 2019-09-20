@@ -1,0 +1,137 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@{
+    var userImagen = UserManager.GetUserName(User) + ".png";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] System Ventas</title>
+
+    <environment include="Development">
+        <link rel="stylesheet" href="~/materialize/css/materialize.css" />
+        <link rel="stylesheet" href="~/css/site.css" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+    </environment>
+</head>
+<body>
+    <nav>
+        <div class="nav-wrapper cyan darken-2">
+            <a href="#!" class="brand-logo center">
+                Sistema de ventas & facturaci&oacute;n
+            </a>
+            @if (SignInManager.IsSignedIn(User))
+            {
+                <div id="menuNavbar1">
+                    <ul class="right hide-on-med-and-down">
+                        <a asp-area="Usuarios" asp-controller="Usuarios" asp-action="SessionClose">
+                            Salir
+                        </a>
+                    </ul>
+                    <a href="#" data-target="slide-out" class="btn-floating btn-large waves-effect waves-light cyan darken-2 sidenav-trigger"></a>
+                </div>
+
+            }
+        </div>
+    </nav>
+    <ul id="slide-out" class="sidenav">
+        <li>
+            <div class="user-view cyan darken-2">
+                <img id="foto1" class=" responsive-img valign profile-image" src="~/images/fotos/Usuarios/@userImagen" />
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <p class="white-text" id="name1">@UserManager.GetUserName(User)</p>
+                    <p class="white-text" id="role1">@User.Claims.FirstOrDefault(u => u.Type.Equals("http://schemas.microsoft.com/ws/2008/06/identity/claims/role")).Value</p>
+                }
+            </div>
+        </li>
+        <li>
+            <a asp-area="Principal" asp-controller="Principal" asp-action="Index" onclick="">Inicio</a>
+        </li>
+        <li>
+            <a asp-area="Usuarios" asp-controller="Usuarios" asp-action="Index" onclick="">Usuarios</a>
+        </li>
+        <li>
+            <a asp-area="Cajas" asp-controller="Cajas" asp-action="Index" onclick="">Cajas</a>
+        </li>
+        <li>
+            <a asp-area="Usuarios" asp-controller="Usuarios" asp-action="SessionClose">
+                Salir
+            </a>
+        </li>
+    </ul>
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <div id="menuNavbar2">
+            <div id="main">
+                <div class="wrapper">
+                    <aside id="left-sidebar-nav">
+                        <ul id="slide-out" class="side-nav fixed leftside-navigation">
+                            <li class="user-details cyan darken-2">
+                                <div class="row">
+                                    <div class="col col s5 m4 l6">
+                                        <img src="~/images/fotos/Usuarios/@userImagen" alt="" id="foto2" class=" responsive-img valign profile-image">
+                                    </div>
+                                    <div class="col col s8 m8 l8">
+                                        <p class="white-text" id="name2">@UserManager.GetUserName(User)</p>
+                                        <p class="white-text" id="role2">@User.Claims.FirstOrDefault(u => u.Type.Equals("http://schemas.microsoft.com/ws/2008/06/identity/claims/role")).Value</p>
+                                    </div>
+                                </div>
+                            </li>
+                            <div class="collection">
+                                <a asp-area="Principal" asp-controller="Principal" asp-action="Index" onclick="" id="enlace1" class="collection-item">Inicio</a>
+
+                                <a asp-area="Usuarios" asp-controller="Usuarios" asp-action="Index" onclick="" id="enlace2" class="collection-item">Usuarios</a>
+
+                                <a asp-area="Cajas" asp-controller="Cajas" asp-action="Index" onclick="" id="enlace3" class="collection-item">Cajas</a>
+                            </div>
+                        </ul>
+                    </aside>
+                </div>
+            </div>
+        </div>
+
+    }
+    <partial name="_CookieConsentPartial" />
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; 2018 - Sistem Ventas</p>
+        </footer>
+    </div>
+
+    <environment include="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/js/Config.js" asp-append-version="true"></script>
+        <script src="~/js/Funciones.js" asp-append-version="true"></script>
+        <script src="~/js/Uploadpicture.js" asp-append-version="true"></script>
+        <script src="~/js/Principal.js" asp-append-version="true"></script>
+        <script src="~/js/Usuarios.js" asp-append-version="true"></script>
+        <script src="~/js/Clientes.js" asp-append-version="true"></script>
+        <script src="~/js/Proveedores.js" asp-append-version="true"></script>
+        <script src="~/js/Compras.js" asp-append-version="true"></script>
+        <script src="~/js/Ventas.js" asp-append-version="true"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        <script src="~/materialize/js/materialize.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery"
+                crossorigin="anonymous"
+                integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
+        </script>
+
+        <script src="~/js/site.min.js" asp-append-version="true"></script>
+    </environment>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

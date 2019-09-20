@@ -1,0 +1,95 @@
+﻿@model DataPaginador<TCajas>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container2">
+    <div class="row">
+        <h5>Registros de cajas</h5>
+        <div id="test1" class="col s12">
+            <div class="row">
+                <div class="input-field col s12">
+                    <form asp-area="Cajas" asp-controller="Cajas" asp-action="SetCaja" method="post">
+                        <div class="row">
+                            <div class="input-field col s3">
+                                <input type="number" name="caja" min="1" max="12" value="1">
+                            </div>
+                            <div class="input-field col s6">
+                                <button type="submit" class="waves-effect waves-light btn-small grey darken-3">Registrar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <ul class="collapsible">
+                <li>
+                    <div class="collapsible-header">
+                        <img class='responsive' src='~/images/iconos/keyboard.png' />Cajas
+                    </div>
+                    <div class="collapsible-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Input.Caja)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Input.Estado)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Input.Usuario)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Input.Asignada)
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.List)
+                                {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Caja)
+                                    </td>
+                                    <td>
+                                        <form asp-area="Cajas" asp-controller="Cajas" asp-action="UpdateEstado" method="post">
+                                            <input type="hidden" name="id" value="@item.ID">
+                                            @if (item.Estado)
+                                            {
+                                                <button type="submit" class="waves-effect waves-light btn-small green accent-4">On</button>
+                                            }
+                                            else
+                                            {
+                                                <button type="submit" class="waves-effect waves-light btn-small red darken-4">Off</button>
+                                            }
+                                        </form>
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Usuario)
+                                    </td>
+                                    <td>
+                                        @if (item.Asignada)
+                                        {
+                                            <button class="waves-effect waves-light btn-small green accent-4">On</button>
+                                        }
+                                        else
+                                        {
+                                            <button class="waves-effect waves-light btn-small yellow darken-3">Off</button>
+                                        }
+                                    </td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <div>
+                            Resultados @Html.Raw(Model.Pagi_info)
+                            <br />
+                            @Html.Raw(Model.Pagi_navegacion)
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

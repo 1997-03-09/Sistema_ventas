@@ -1,0 +1,61 @@
+﻿@model ReportesModel
+@{
+    var proveedor = Model.Input.Proveedor;
+}
+<div id="ticket">
+    <center>
+        <h5>Ticket de:PDHN</h5><br />
+    </center>
+    <ul class="collapsible">
+        <li>
+            <div class="collapsible-header">
+                <img class='responsive' src='~/images/iconos/Proveedores2.png' />Proveedor:@proveedor
+            </div>
+            <div class="collapsible-bod">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                Deuda
+                            </th>
+                            <th>
+                                Fecha Deuda
+                            </th>
+                            <th>
+                                Pago
+                            </th>
+                            <th>
+                                Fecha Pago
+                            </th>
+                            <th>
+                                Ticket
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Input.ProveedoresReport)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Deuda)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FechaDeuda)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Pago)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FechaPago)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Ticket)
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </li>
+    </ul>
+</div>

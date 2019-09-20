@@ -1,0 +1,140 @@
+﻿@page
+@model DetallesModel
+@{
+    string imagen = null;
+    string codigo = Model.Input.TComprasTemp.Codigo;
+    if (Model.AvatarImage != null || codigo != null)
+    {
+        imagen = codigo + ".png";
+
+    }
+    else
+    {
+        imagen = "default.png";
+    }
+}
+<div class="container2">
+    <div class="row">
+        <div class="panel  panel-primary">
+            <div class="panel-heading">
+                <center>
+                    <h5 class="panel-title">Detalles de compra</h5>
+                </center>
+            </div>
+            <div class="row">
+                <div class="col s11 m3">
+                    <div class="card ">
+                        <div class="card-content white-text">
+                            <center>
+                                <span class="card-title blue-grey-text  ">Imagen</span>
+                                <output id="productoCompra">
+                                    <img class=" responsive-img" src="~/images/fotos/Compras/@imagen" />
+                                </output>
+                            </center>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col s11 m9">
+                    <div id="ImprimirCompra">
+                        <div class="card ">
+                            <div class="card-content black-text">
+                                <center>
+                                    <span class="card-title">Proveedor: @Html.Raw(Model.Input.TComprasTemp.Proveedor)</span>
+                                </center>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                Producto
+                                            </th>
+                                            <th>
+                                                Precio
+                                            </th>
+                                            <th>
+                                                Cantidad
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <span>@Html.Raw(Model.Input.TComprasTemp.Descripcion)</span>
+                                            </td>
+                                            <td>
+                                                <span>@Html.Raw(Model.Input.TComprasTemp.Precio)</span>
+                                            </td>
+                                            <td>
+                                                <span>@Html.Raw(Model.Input.TComprasTemp.Cantidad)</span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                Credito
+                                            </th>
+                                            <th>
+                                                Importe
+                                            </th>
+                                            <th>
+                                                Fecha
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                @if (Model.Input.TComprasTemp.Credito)
+                                                {
+                                                    <span class="green-text text-darken-3">Activo</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="deep-orange-text text-darken-4">No disponible</span>
+
+                                                }
+                                            </td>
+                                            <td>
+                                                <span>@Html.Raw(Model.Input.TComprasTemp.Importe)</span>
+                                            </td>
+                                            <td>
+                                                <span>@Html.Raw(Model.Input.TComprasTemp.Fecha)</span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <label id="Message" class="red-text text-darken-4 ">@Html.Raw(Model.Input.ErrorMessage)  </label>
+                    <form method="post">
+                        <div class="row">
+                            <div class="input-field col s4">
+                                <a class="waves-effect waves-light orange darken-2 btn-small" onclick="printThisDiv('ImprimirCompra')">Imprimir</a>
+                            </div>
+                            @if (Model.Valor) { 
+                                <div class="input-field col s4">
+                                    <button type="submit" class="waves-effect waves-light btn-small grey darken-3">Aceptar</button>
+                                </div>
+                            }
+                            @if (Model.Input.TComprasTemp.Credito && Model.Valor)
+                            {
+                                <div class="input-field col s4">
+                                    <a class="waves-effect waves-light orange darken-2 btn-small" onclick="printThisDiv('ticket')">Ticket</a>
+                                </div>
+                            }
+                        </div>
+                    </form>
+                    <div class="row">
+                        @if (Model.Input.TComprasTemp.Credito && Model.Valor)
+                        {
+                            <partial name="_Ticket" />
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

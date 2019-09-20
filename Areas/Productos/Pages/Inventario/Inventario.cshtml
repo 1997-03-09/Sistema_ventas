@@ -1,0 +1,66 @@
+﻿@page
+@model InventarioModel
+@{
+}
+    <div class="container2">
+        <div class="row">
+            <center>
+                <h5>Inventario de producto</h5>
+            </center>
+            <div class="input-field col s12">
+                <form method="get">
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input type="text" name="Search" placeholder="Buscar producto">
+                        </div>
+                        <div class="input-field col s6">
+                            <button type="submit" class="waves-effect waves-light btn-small">Buscar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <form asp-area="Productos" method="post">
+                <button type="submit" class="waves-effect waves-light btn-small grey darken-3">Export</button>
+            </form>
+        </div>
+        <div class="row">
+            @foreach (var item in Model.Input.model.List)
+            {
+                var image = "data:image/jpg;base64," + Convert.ToBase64String(item.Image, 0, item.Image.Length);
+                <div class="col s6 m3">
+                    <div class="card  darken-1">
+                        <div class="card-content blue-grey-text">
+                            <center>
+                                <span>@Html.Raw(item.Descripcion)</span>
+                                <a asp-area="Productos" asp-page="Detalles" asp-route-id="@item.ID">
+                                    <img class="imgProducto" src="@image" alt="" />
+                                </a>
+                            </center>
+                        </div>
+                        <div class="card-action">
+                            <table class="tables">
+                                <thead>
+                                    <tr>
+                                        <td>
+                                            Precio
+                                            @Html.Raw(item.Precio)
+                                        </td>
+                                        <td>
+                                            Descuento
+                                            @Html.Raw(item.Descuento)
+                                        </td>
+                                    </tr>
+                                </thead>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div>
+            Resultados @Html.Raw(Model.Input.model.Pagi_info)
+            <br />
+            @Html.Raw(Model.Input.model.Pagi_navegacion)
+        </div>
+    </div>

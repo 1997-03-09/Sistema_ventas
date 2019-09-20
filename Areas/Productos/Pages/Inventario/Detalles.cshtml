@@ -1,0 +1,138 @@
+﻿@page
+@model DetallesModel
+@{
+    var image = "data:image/jpg;base64," + Convert.ToBase64String(Model.Input.Image, 0, Model.Input.Image.Length);
+}
+<div class="container2">
+    <form method="post" enctype="multipart/form-data">
+        <div class="row">
+            <div class="panel  panel-primary">
+                <div class="panel-heading">
+                    <center>
+                        <h5 class="panel-title">Detalles del producto</h5>
+                    </center>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12 m3">
+                    <div class="card ">
+                        <div class="card-content white-text">
+                            <center>
+                                <span class="card-title blue-grey-text  ">Imagen</span>
+                                <output id="productoDetalles">
+                                    <img class="imgProducto" src="@image" alt="" />
+                                </output>
+                            </center>
+                            <div class="file-field input-field">
+                                <div class="btn-small waves-effect waves-light">
+                                    <span>Subir</span>
+                                    <input asp-for="Input.AvatarImage" accept="image/*" type="file" id="files">
+                                    <div class="file-path-wrapper">
+                                        <input class="file-path " type="text">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-action">
+                            <table style="max-width:100%" id="ImprimirCodigo">
+                                <thead>
+                                    <tr>
+                                        <td>
+                                            <center>
+                                                <span>@Html.Raw(Model.Input.Descripcion)</span>
+                                            </center>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <center>
+                                                <img class=" responsive-img" src="@Model.Input.CodeImage" alt="" />
+                                            </center>
+                                        </td>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s12 m9">
+                    <div id="ImprimirProducto">
+                        <div class="card ">
+                            <div class="card-content black-text">
+                                <center>
+                                    <span class="card-title">Informacion del producto</span>
+                                </center>
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div class="input-field col s12">
+                                                    <input asp-for="Input.Descripcion" placeholder="Descripcion">
+                                                    <label class="panel-title" asp-for="Input.Descripcion"></label>
+                                                    <span asp-validation-for="Input.Descripcion" class="text-danger"></span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="input-field col s12">
+                                                    <input asp-for="Input.Precio" placeholder="Precio">
+                                                    <label asp-for="Input.Precio"></label>
+                                                    <span asp-validation-for="Input.Precio" class="text-danger"></span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="input-field col s12">
+                                                    <input asp-for="Input.Descuento" placeholder="Descuento">
+                                                    <label asp-for="Input.Descuento"></label>
+                                                    <span asp-validation-for="Input.Descuento" class="text-danger"></span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div class="input-field col s12">
+                                                    <input asp-for="Input.Departamento" placeholder="Departamento">
+                                                    <label asp-for="Input.Departamento"></label>
+                                                    <span asp-validation-for="Input.Departamento" class="text-danger"></span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="input-field col s12">
+                                                    <input asp-for="Input.Categoria" placeholder="Categoria">
+                                                    <label asp-for="Input.Categoria"></label>
+                                                    <span asp-validation-for="Input.Categoria" class="text-danger"></span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="input-field col s12">
+                                                    <input asp-for="Input.Fecha" disabled>
+                                                    <label asp-for="Input.Fecha"></label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <label id="Message" class="red-text text-darken-4 ">@Html.Raw(Model.Input.ErrorMessage) </label>
+                    <div class="row">
+                        <div class="input-field col s4">
+                            <a class="waves-effect waves-light orange darken-2 btn-small" onclick="printThisDiv('ImprimirProducto')">Producto</a>
+                        </div>
+                        <div class="input-field col s4">
+                            <a class="waves-effect waves-light grey darken-3 btn-small" onclick="printThisDiv('ImprimirCodigo')">Codigo</a>
+                        </div>
+                        <div class="input-field col s4">
+                            <button type="submit" class="waves-effect waves-light btn-small grey darken-3">Actualizar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

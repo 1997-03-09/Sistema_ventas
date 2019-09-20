@@ -1,0 +1,51 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <RuntimeFrameworkVersion>2.2.1</RuntimeFrameworkVersion>
+    <UserSecretsId>aspnet-Sistem_Ventas-E69F807A-D035-47C1-BC7A-038EC715C288</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Data\Migrations\20180703020042_[Migration4].cs" />
+    <Compile Remove="Data\Migrations\20180703020042_[Migration4].Designer.cs" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="DotNetCore.NPOI" Version="1.2.1" />
+    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.2.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" PrivateAssets="All" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="Areas\Cajas\Data\" />
+    <Folder Include="Areas\Clientes\Data\" />
+    <Folder Include="Areas\Compras\Data\" />
+    <Folder Include="Areas\Identity\Services\" />
+    <Folder Include="Areas\Principal\Data\" />
+    <Folder Include="Areas\Principal\Models\" />
+    <Folder Include="Areas\Productos\Data\" />
+    <Folder Include="Areas\Proveedores\Data\" />
+    <Folder Include="Areas\Usuarios\Data\" />
+    <Folder Include="Areas\Ventas\Data\" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Content Update="Areas\Compras\Pages\Compras\_Ticket.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Compras\Pages\_ViewImports.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Principal\Views\_ViewImports.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+  </ItemGroup>
+
+
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JSONSchema="http://json.schemastore.org/babelrc" /></VisualStudio></ProjectExtensions>
+
+</Project>

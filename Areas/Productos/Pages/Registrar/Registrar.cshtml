@@ -1,0 +1,135 @@
+﻿@page
+@model RegistrarModel
+@{
+    string codigo = Model.Input.Compras.Codigo + ".png";
+}
+<div class="container2">
+    <form method="post" enctype="multipart/form-data">
+        <div class="modal-content">
+            <center>
+                <h5>Registro de producto</h5>
+            </center>
+            <div class="row">
+                <div class="col s9 m4">
+                    <div class="card ">
+                        <div class="card-content white-text">
+                            <center>
+                                <span class="card-title blue-grey-text  ">Imagen</span>
+                                <output id="productoCompra">
+                                    <img class=" responsive-img" src="~/images/fotos/Compras/@codigo" />
+                                </output>
+                            </center>
+                        </div>
+                        <div class="card-action">
+                            <center>
+                                <img class=" responsive-img" src="@Model.Input.Image" alt="" />
+                            </center>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input asp-for="Input.Descripcion" placeholder="Descripcion">
+                            <label asp-for="Input.Descripcion"></label>
+                            <span asp-validation-for="Input.Descripcion" class="text-danger"></span>
+                        </div>
+                        <div class="input-field col s6">
+                            <input asp-for="Input.Precio" placeholder="Precio">
+                            <label asp-for="Input.Precio"></label>
+                            <span asp-validation-for="Input.Precio" class="text-danger"></span>
+                        </div>
+                        <div class="input-field col s6">
+                            <input asp-for="Input.Departamento" placeholder="Departamento">
+                            <label asp-for="Input.Departamento"></label>
+                            <span asp-validation-for="Input.Departamento" class="text-danger"></span>
+                        </div>
+                        <div class="input-field col s6">
+                            <input asp-for="Input.Categoria" placeholder="Categoria">
+                            <label asp-for="Input.Categoria"></label>
+                            <span asp-validation-for="Input.Categoria" class="text-danger"></span>
+                        </div>
+                        <div class="input-field col s4">
+                            <button type="submit" class="waves-effect waves-light btn-small grey darken-3">Registrar</button>
+                        </div>
+                    </div>
+                    <label id="Message" class="red-text text-darken-4 ">@Html.DisplayFor(m => m.Input.ErrorMessage)  </label>
+                </div>
+                <div id="ImprimirCompra">
+                    <div class="card ">
+                        <div class="card-content black-text">
+                            <center>
+                                <span class="card-title">Proveedor: @Html.Raw(Model.Input.Compras.Proveedor)</span>
+                            </center>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Producto
+                                        </th>
+                                        <th>
+                                            Precio
+                                        </th>
+                                        <th>
+                                            Cantidad
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <span>@Html.Raw(Model.Input.Compras.Descripcion)</span>
+                                        </td>
+                                        <td>
+                                            <span>@Html.Raw(Model.Input.Compras.Precio)</span>
+                                        </td>
+                                        <td>
+                                            <span>@Html.Raw(Model.Input.Compras.Cantidad)</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Credito
+                                        </th>
+                                        <th>
+                                            Importe
+                                        </th>
+                                        <th>
+                                            Fecha
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            @if (Model.Input.Compras.Credito)
+                                            {
+                                                <span class="green-text text-darken-3">Activo</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="deep-orange-text text-darken-4">No disponible</span>
+
+                                            }
+                                        </td>
+                                        <td>
+                                            <span>@Html.Raw(Model.Input.Compras.Importe)</span>
+                                        </td>
+                                        <td>
+                                            <span>@Html.Raw(Model.Input.Compras.Fecha)</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

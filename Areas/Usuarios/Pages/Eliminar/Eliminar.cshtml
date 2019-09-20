@@ -1,0 +1,41 @@
+﻿@page
+@model EliminarModel
+@{
+}
+<div id="" class="container2">
+    <div class="card ">
+        <div class="card-content">
+            <h5>Eliminar</h5>
+            <p>Esta seguro de eliminar el usuario?</p>
+            <div>
+                <p>Usuario</p>
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Input.NID)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Input.NID)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Input.Nombre)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Input.Nombre)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Input.Apellido)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Input.Apellido)
+                    </dd>
+                </dl>
+                <form method="post">
+
+                    <a asp-area="Usuarios" asp-controller="Usuarios" asp-action="Index">Back to List</a> |
+                    <input type="submit" value="Delete" class="btn red btn-default" />
+                </form>
+            </div>
+            <label id="Message" class="red-text text-darken-4 ">@Html.DisplayFor(m => m.Input.ErrorMessage)  </label>
+        </div>
+    </div>
+</div>
